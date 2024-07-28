@@ -9,5 +9,5 @@
     "strict": true,
     "noEmit": true
   },
-  "include": ["*.config.ts"]
+  "include": ["*.config.ts", "*.config.js"]
 }
