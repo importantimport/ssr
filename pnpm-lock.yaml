@@ -15,6 +15,9 @@ importers:
       '@antfu/eslint-config':
         specifier: ^2.24.0
         version: 2.24.0(@unocss/eslint-plugin@0.61.6(eslint@9.5.0)(typescript@5.5.4))(@vue/compiler-sfc@3.4.34)(eslint-plugin-format@0.1.2(eslint@9.5.0))(eslint@9.5.0)(typescript@5.5.4)
+      '@importantimport/tsconfig':
+        specifier: ^0.0.1
+        version: 0.0.1
       '@unocss/eslint-plugin':
         specifier: ^0.61.6
         version: 0.61.6(eslint@9.5.0)(typescript@5.5.4)
@@ -448,6 +451,9 @@ packages:
 
   '@iconify/utils@2.1.25':
     resolution: {integrity: sha512-Y+iGko8uv/Fz5bQLLJyNSZGOdMW0G7cnlEX1CiNcKsRXX9cq/y/vwxrIAtLCZhKHr3m0VJmsjVPsvnM4uX8YLg==}
+
+  '@importantimport/tsconfig@0.0.1':
+    resolution: {integrity: sha512-ZALhTBXxztkzytEzQpaARIAYhyEdfJgqBcnwyK1wuT5PbyCGSEXWUJEOt6u7GxFznew2pRVMcqO1xLI+3NsFFg==}
 
   '@jridgewell/gen-mapping@0.3.5':
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
@@ -2630,6 +2636,8 @@ snapshots:
       mlly: 1.7.1
     transitivePeerDependencies:
       - supports-color
+
+  '@importantimport/tsconfig@0.0.1': {}
 
   '@jridgewell/gen-mapping@0.3.5':
     dependencies:
