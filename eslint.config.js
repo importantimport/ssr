@@ -6,6 +6,6 @@ export default antfu({
   vue: true,
 }, {
   rules: {
-    'antfu/top-level-function': 'off'
-  }
+    'antfu/top-level-function': 'off',
+  },
 })

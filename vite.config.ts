@@ -8,6 +8,6 @@ import unoConfig from './uno.config'
 export default defineConfig({
   plugins: [
     vue(),
-    unoCSS(unoConfig)
+    unoCSS(unoConfig),
   ],
 })
