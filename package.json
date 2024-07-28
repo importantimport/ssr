@@ -7,19 +7,25 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@unocss/preset-uno": "^0.61.6",
-    "@unocss/reset": "^0.61.6",
-    "@unocss/vite": "^0.61.6",
-    "unocss-preset-animations": "^1.1.0",
-    "unocss-preset-shadcn": "^0.3.1",
     "vue": "^3.4.31"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.24.0",
+    "@unocss/eslint-plugin": "^0.61.6",
+    "@unocss/preset-uno": "^0.61.6",
+    "@unocss/reset": "^0.61.6",
+    "@unocss/vite": "^0.61.6",
     "@vitejs/plugin-vue": "^5.0.5",
+    "eslint": "9.5.0",
+    "eslint-plugin-format": "^0.1.2",
     "typescript": "^5.2.2",
+    "unocss-preset-animations": "^1.1.0",
+    "unocss-preset-shadcn": "^0.3.1",
     "vite": "6.0.0-alpha.19",
     "vue-tsc": "^2.0.24"
   }
