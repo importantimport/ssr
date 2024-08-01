@@ -21,10 +21,16 @@ const profiles = z.array(z.object({
     .describe('e.g. neutralthoughts'),
   url: z.string().url().default('https://twitter.com/john')
     .describe('e.g. http://twitter.example.com/neutralthoughts'),
-}))
-  .optional()
+}).describe('Specify any number of social networks that you participate in'))
+//   .optional()
   .describe('Profiles')
-//   .describe('Specify any number of social networks that you participate in')
+  .default([
+    {
+      network: 'Twitter',
+      username: 'john',
+      url: 'https://twitter.com/john',
+    },
+  ])
 
 const basics = z.object({
   name: z.string().default('John Doe'),
