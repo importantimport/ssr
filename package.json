@@ -5,15 +5,15 @@
   "private": true,
   "packageManager": "pnpm@9.6.0",
   "scripts": {
-    "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview",
+    "dev": "vite",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@iconify/vue": "^4.1.2",
-    "@radix-icons/vue": "^1.0.0",
+    "@radix-icons/vue": "1.0.0",
     "@vueuse/core": "^10.11.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

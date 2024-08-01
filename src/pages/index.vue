@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
 import EditForm from '@/components/EditForm.vue'
 import FormPlaceHolder from '@/components/FormPlaceHolder.vue'
-import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
   <div class="relative grid min-h-screen flex-col items-center justify-center px-4 container lg:grid-cols-2 lg:max-w-none lg:px-0">
     <RouterLink
-      to="/resume"
       :class="cn(
         buttonVariants({ variant: 'ghost' }),
         'absolute right-4 top-4 md:right-8 md:top-8',
       )"
+      to="/resume"
     >
       Share
     </RouterLink>

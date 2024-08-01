@@ -3,10 +3,10 @@ import { ref } from 'vue'
 // import LucideSpinner from '~icons/lucide/loader-2'
 // import GitHubLogo from '~icons/radix-icons/github-logo'
 
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { cn } from '@/lib/utils'
 
 const isLoading = ref(false)
 async function onSubmit(event: Event) {
@@ -29,13 +29,13 @@ async function onSubmit(event: Event) {
               Url
             </Label>
             <Input
-              id="url"
-              placeholder="https://registry.jsonresume.org/thomasdavis.json"
-              type="url"
+              :disabled="isLoading"
               auto-capitalize="none"
               auto-complete="email"
+              id="url"
               auto-correct="off"
-              :disabled="isLoading"
+              placeholder="https://registry.jsonresume.org/thomasdavis.json"
+              type="url"
             />
           </div>
           <Button :disabled="isLoading">
@@ -46,7 +46,7 @@ async function onSubmit(event: Event) {
       </form>
       <form @submit="onSubmit">
         <div class="grid">
-          <Button variant="secondary" :disabled="isLoading">
+          <Button :disabled="isLoading" variant="secondary">
             Import from Clipboard
           </Button>
         </div>
@@ -62,7 +62,7 @@ async function onSubmit(event: Event) {
         </span>
       </div>
     </div>
-    <Button variant="outline" type="button" :disabled="isLoading">
+    <Button :disabled="isLoading" type="button" variant="outline">
       <!-- <LucideSpinner v-if="isLoading" class="mr-2 h-4 w-4 animate-spin" /> -->
       <!-- <GitHubLogo v-else class="mr-2 h-4 w-4" /> -->
       New Resume

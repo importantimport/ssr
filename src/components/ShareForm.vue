@@ -3,10 +3,10 @@ import { ref } from 'vue'
 // import LucideSpinner from '~icons/lucide/loader-2'
 // import GitHubLogo from '~icons/radix-icons/github-logo'
 
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { cn } from '@/lib/utils'
 
 const isLoading = ref(false)
 async function onSubmit(event: Event) {
@@ -28,13 +28,13 @@ async function onSubmit(event: Event) {
             Url
           </Label>
           <Input
-            id="url"
-            placeholder="https://registry.jsonresume.org/thomasdavis.json"
-            type="url"
+            :disabled="isLoading"
             auto-capitalize="none"
             auto-complete="email"
+            id="url"
             auto-correct="off"
-            :disabled="isLoading"
+            placeholder="https://registry.jsonresume.org/thomasdavis.json"
+            type="url"
           />
         </div>
         <Button :disabled="isLoading">

@@ -1,5 +1,5 @@
-import { defineConfig } from '@unocss/vite'
 import { presetUno } from '@unocss/preset-uno'
+import { defineConfig } from '@unocss/vite'
 import { presetAnimations } from 'unocss-preset-animations'
 import {
   // builtinColors,
@@ -8,12 +8,6 @@ import {
 
 /** @see {@link https://github.com/hyoban/unocss-preset-shadcn#usage} */
 export default defineConfig({
-  presets: [
-    presetUno(),
-    presetAnimations(),
-    presetShadcn(),
-    // presetShadcn(builtinColors.map(c => ({ color: c }))),
-  ],
   content: {
     pipeline: {
       include: [
@@ -24,4 +18,10 @@ export default defineConfig({
       ],
     },
   },
+  presets: [
+    presetUno(),
+    presetAnimations(),
+    presetShadcn(),
+    // presetShadcn(builtinColors.map(c => ({ color: c }))),
+  ],
 })
