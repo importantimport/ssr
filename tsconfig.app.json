@@ -1,19 +1,11 @@
 {
-  "extends": "@importantimport/tsconfig",
-  "compilerOptions": {
-    "composite": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "jsx": "preserve",
-    "moduleDetection": "force",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
+  "extends": [
+    "@importantimport/tsconfig/app.json",
+    "@importantimport/tsconfig/parts/jsx-preserve.json",
+    "@importantimport/tsconfig/parts/paths-at.json"
+  ],
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
+    "src",
     "./typed-router.d.ts"
   ]
 }
