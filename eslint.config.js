@@ -6,4 +6,8 @@ export default antfu({
   typescript: true,
   unocss: true,
   vue: true,
+}, {
+  rules: {
+    'vue/attributes-order': 'off',
+  },
 }).append(ii({ functional: false }))
