@@ -6,4 +6,4 @@ export default antfu({
   typescript: true,
   unocss: true,
   vue: true,
-}).append(ii())
+}).append(ii({ functional: false }))
