@@ -11,6 +11,9 @@ importers:
       '@iconify/vue':
         specifier: ^4.1.2
         version: 4.1.2(vue@3.4.34(typescript@5.5.4))
+      '@internationalized/date':
+        specifier: ^3.5.5
+        version: 3.5.5
       '@radix-icons/vue':
         specifier: 1.0.0
         version: 1.0.0(vue@3.4.34(typescript@5.5.4))

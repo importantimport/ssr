@@ -1,11 +1,16 @@
 <script lang="ts" setup>
 import AccountSwitcher from '@/components/AccountSwitcher.vue'
 import Nav, { type LinkProp } from '@/components/Nav.vue'
+import { AutoForm } from '@/components/ui/auto-form'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
 import { Separator } from '@/components/ui/separator'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import { schema } from '@/lib/schema'
 import { cn } from '@/lib/utils'
+import { toTypedSchema } from '@vee-validate/zod'
+import { useForm } from 'vee-validate'
 import { ref } from 'vue'
+import * as z from 'zod'
 
 interface MailProps {
   defaultCollapsed?: boolean
@@ -154,37 +159,9 @@ function onExpand() {
       </ResizablePanel>
       <ResizableHandle id="resize-handle-1" with-handle />
       <ResizablePanel :default-size="defaultLayout[1]" :min-size="30" id="resize-panel-2">
-        <h1>Editor</h1>
-        <!-- <Tabs default-value="all">
-          <div class="flex items-center px-4 py-2">
-            <h1 class="text-xl font-bold">
-              Inbox
-            </h1>
-            <TabsList class="ml-auto">
-              <TabsTrigger value="all" class="text-zinc-600 dark:text-zinc-200">
-                All mail
-              </TabsTrigger>
-              <TabsTrigger value="unread" class="text-zinc-600 dark:text-zinc-200">
-                Unread
-              </TabsTrigger>
-            </TabsList>
-          </div>
-          <Separator />
-          <div class="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <form>
-              <div class="relative">
-                <Search class="absolute left-2 top-2.5 size-4 text-muted-foreground" />
-                <Input v-model="searchValue" placeholder="Search" class="pl-8" />
-              </div>
-            </form>
-          </div>
-          <TabsContent value="all" class="m-0">
-            <MailList v-model:selected-mail="selectedMail" :items="filteredMailList" />
-          </TabsContent>
-          <TabsContent value="unread" class="m-0">
-            <MailList v-model:selected-mail="selectedMail" :items="unreadMailList" />
-          </TabsContent>
-        </Tabs> -->
+        <div class="px-2">
+          <AutoForm :form="form" :schema="schema" />
+        </div>
       </ResizablePanel>
       <ResizableHandle id="resiz-handle-2" with-handle />
       <ResizablePanel :default-size="defaultLayout[2]" id="resize-panel-3">
