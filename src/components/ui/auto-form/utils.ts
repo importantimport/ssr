@@ -2,8 +2,8 @@ import type { z } from 'zod'
 
 // TODO: This should support recursive ZodEffects but TypeScript doesn't allow circular type definitions.
 export type ZodObjectOrWrapped =
-  | z.ZodObject<any, any>
   | z.ZodEffects<z.ZodObject<any, any>>
+  | z.ZodObject<any, any>
 
 /**
  * Beautify a camelCase string.
@@ -36,7 +36,7 @@ export function getIndexIfArray(string: string) {
  * This will unpack optionals, refinements, etc.
  */
 export function getBaseSchema<
-  ChildType extends z.ZodAny | z.AnyZodObject = z.ZodAny,
+  ChildType extends z.AnyZodObject | z.ZodAny = z.ZodAny,
 >(schema: ChildType | z.ZodEffects<ChildType>): ChildType | null {
   if (!schema)
     return null
@@ -117,7 +117,7 @@ export function normalizeFormPath(path: string): string {
   return fullPath
 }
 
-type NestedRecord = Record<string, unknown> | { [k: string]: NestedRecord }
+type NestedRecord = { [k: string]: NestedRecord } | Record<string, unknown>
 /**
  * Checks if the path opted out of nested fields using `[fieldName]` syntax
  */
@@ -145,12 +145,12 @@ export function getFromPath<TValue = unknown, TFallback = TValue>(
   object: NestedRecord | undefined,
   path: string,
   fallback?: TFallback,
-): TValue | TFallback
+): TFallback | TValue
 export function getFromPath<TValue = unknown, TFallback = TValue>(
   object: NestedRecord | undefined,
   path: string,
   fallback?: TFallback,
-): TValue | TFallback | undefined {
+): TFallback | TValue | undefined {
   if (!object)
     return fallback
 

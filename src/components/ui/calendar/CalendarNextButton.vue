@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { type HTMLAttributes, computed } from 'vue'
-import { CalendarNext, type CalendarNextProps, useForwardProps } from 'radix-vue'
-import { ChevronRightIcon } from '@radix-icons/vue'
-import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { ChevronRightIcon } from '@radix-icons/vue'
+import { CalendarNext, type CalendarNextProps, useForwardProps } from 'radix-vue'
+import { computed, type HTMLAttributes } from 'vue'
 
-const props = defineProps<CalendarNextProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<{ class?: HTMLAttributes['class'] } & CalendarNextProps>()
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props

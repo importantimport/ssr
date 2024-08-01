@@ -1,23 +1,25 @@
 <script setup lang="ts" generic="T extends z.ZodAny">
-import * as z from 'zod'
-import { computed, provide } from 'vue'
-import { PlusIcon, TrashIcon } from 'lucide-vue-next'
-import { FieldArray, FieldContextKey, useField } from 'vee-validate'
-import type { Config, ConfigItem } from './interface'
-import { beautifyObjectName, getBaseType } from './utils'
-import AutoFormField from './AutoFormField.vue'
-import AutoFormLabel from './AutoFormLabel.vue'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import { FormItem, FormMessage } from '@/components/ui/form'
+import { Separator } from '@/components/ui/separator'
+import { PlusIcon, TrashIcon } from 'lucide-vue-next'
+import { FieldArray, FieldContextKey, useField } from 'vee-validate'
+import { computed, provide } from 'vue'
+import * as z from 'zod'
+
+import type { Config, ConfigItem } from './interface'
+
+import AutoFormField from './AutoFormField.vue'
+import AutoFormLabel from './AutoFormLabel.vue'
+import { beautifyObjectName, getBaseType } from './utils'
 
 const props = defineProps<{
+  config?: Config<T>
+  disabled?: boolean
   fieldName: string
   required?: boolean
-  config?: Config<T>
   schema?: z.ZodArray<T>
-  disabled?: boolean
 }>()
 
 function isZodArray(
@@ -44,8 +46,8 @@ const itemShape = computed(() => {
       : null
 
   return {
-    type: getBaseType(schema),
     schema,
+    type: getBaseType(schema),
   }
 })
 
@@ -55,33 +57,33 @@ provide(FieldContextKey, fieldContext)
 </script>
 
 <template>
-  <FieldArray v-slot="{ fields, remove, push }" as="section" :name="fieldName">
+  <FieldArray :name="fieldName" as="section" v-slot="{ fields, remove, push }">
     <slot v-bind="props">
-      <Accordion type="multiple" class="w-full" collapsible :disabled="disabled" as-child>
+      <Accordion :disabled="disabled" as-child class="w-full" collapsible type="multiple">
         <FormItem>
           <AccordionItem :value="fieldName" class="border-none">
             <AccordionTrigger>
-              <AutoFormLabel class="text-base" :required="required">
+              <AutoFormLabel :required="required" class="text-base">
                 {{ schema?.description || beautifyObjectName(fieldName) }}
               </AutoFormLabel>
             </AccordionTrigger>
 
             <AccordionContent>
-              <template v-for="(field, index) of fields" :key="field.key">
+              <template :key="field.key" v-for="(field, index) of fields">
                 <div class="mb-4 p-1">
                   <AutoFormField
+                    :config="config as ConfigItem"
                     :field-name="`${fieldName}[${index}]`"
                     :label="fieldName"
                     :shape="itemShape!"
-                    :config="config as ConfigItem"
                   />
 
-                  <div class="!my-4 flex justify-end">
+                  <div class="flex justify-end !my-4">
                     <Button
-                      type="button"
-                      size="icon"
-                      variant="secondary"
                       @click="remove(index)"
+                      size="icon"
+                      type="button"
+                      variant="secondary"
                     >
                       <TrashIcon :size="16" />
                     </Button>
@@ -91,12 +93,12 @@ provide(FieldContextKey, fieldContext)
               </template>
 
               <Button
+                @click="push(null)"
+                class="mt-4 flex items-center"
                 type="button"
                 variant="secondary"
-                class="mt-4 flex items-center"
-                @click="push(null)"
               >
-                <PlusIcon class="mr-2" :size="16" />
+                <PlusIcon :size="16" class="mr-2" />
                 Add
               </Button>
             </AccordionContent>

@@ -1,14 +1,17 @@
 <script setup lang="ts" generic="U extends ZodAny">
 import type { ZodAny } from 'zod'
+
 import { computed } from 'vue'
+
 import type { Config, ConfigItem, Shape } from './interface'
+
 import { DEFAULT_ZOD_HANDLERS, INPUT_COMPONENTS } from './constant'
 import useDependencies from './dependencies'
 
 const props = defineProps<{
+  config?: Config<U> | ConfigItem
   fieldName: string
   shape: Shape
-  config?: ConfigItem | Config<U>
 }>()
 
 function isValidConfig(config: any): config is ConfigItem {
@@ -16,7 +19,7 @@ function isValidConfig(config: any): config is ConfigItem {
 }
 
 const delegatedProps = computed(() => {
-  if (['ZodObject', 'ZodArray'].includes(props.shape?.type))
+  if (['ZodArray', 'ZodObject'].includes(props.shape?.type))
     return { schema: props.shape?.schema }
   return undefined
 })
@@ -26,18 +29,18 @@ const { isDisabled, isHidden, isRequired, overrideOptions } = useDependencies(pr
 
 <template>
   <component
+    :config="config"
+    :disabled="isDisabled"
+    :field-name="fieldName"
     :is="isValidConfig(config)
       ? typeof config.component === 'string'
         ? INPUT_COMPONENTS[config.component!]
         : config.component
       : INPUT_COMPONENTS[DEFAULT_ZOD_HANDLERS[shape.type]] "
-    v-if="!isHidden"
-    :field-name="fieldName"
     :label="shape.schema?.description"
-    :required="isRequired || shape.required"
     :options="overrideOptions || shape.options"
-    :disabled="isDisabled"
-    :config="config"
+    :required="isRequired || shape.required"
+    v-if="!isHidden"
     v-bind="delegatedProps"
   >
     <slot />

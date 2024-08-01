@@ -1,20 +1,23 @@
 <script setup lang="ts" generic="T extends ZodRawShape">
 import type { ZodAny, ZodObject, ZodRawShape } from 'zod'
-import { computed, provide } from 'vue'
-import { FieldContextKey, useField } from 'vee-validate'
-import AutoFormField from './AutoFormField.vue'
-import type { Config, ConfigItem, Shape } from './interface'
-import { beautifyObjectName, getBaseSchema, getBaseType, getDefaultValueInZodStack } from './utils'
-import AutoFormLabel from './AutoFormLabel.vue'
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { FormItem } from '@/components/ui/form'
+import { FieldContextKey, useField } from 'vee-validate'
+import { computed, provide } from 'vue'
+
+import type { Config, ConfigItem, Shape } from './interface'
+
+import AutoFormField from './AutoFormField.vue'
+import AutoFormLabel from './AutoFormLabel.vue'
+import { beautifyObjectName, getBaseSchema, getBaseType, getDefaultValueInZodStack } from './utils'
 
 const props = defineProps<{
+  config?: Config<T>
+  disabled?: boolean
   fieldName: string
   required?: boolean
-  config?: Config<T>
   schema?: ZodObject<T>
-  disabled?: boolean
 }>()
 
 const shapes = computed(() => {
@@ -34,11 +37,11 @@ const shapes = computed(() => {
       options = Object.values(options)
 
     val[name as keyof T] = {
-      type: getBaseType(item),
       default: getDefaultValueInZodStack(item),
       options,
-      required: !['ZodOptional', 'ZodNullable'].includes(item._def.typeName),
+      required: !['ZodNullable', 'ZodOptional'].includes(item._def.typeName),
       schema: item,
+      type: getBaseType(item),
     }
   })
   return val
@@ -52,16 +55,16 @@ provide(FieldContextKey, fieldContext)
 <template>
   <section>
     <slot v-bind="props">
-      <Accordion type="single" as-child class="w-full" collapsible :disabled="disabled">
+      <Accordion :disabled="disabled" as-child class="w-full" collapsible type="single">
         <FormItem>
           <AccordionItem :value="fieldName" class="border-none">
             <AccordionTrigger>
-              <AutoFormLabel class="text-base" :required="required">
+              <AutoFormLabel :required="required" class="text-base">
                 {{ schema?.description || beautifyObjectName(fieldName) }}
               </AutoFormLabel>
             </AccordionTrigger>
             <AccordionContent class="p-1 space-y-5">
-              <template v-for="(shape, key) in shapes" :key="key">
+              <template :key="key" v-for="(shape, key) in shapes">
                 <AutoFormField
                   :config="config?.[key as keyof typeof config] as ConfigItem"
                   :field-name="`${fieldName}.${key.toString()}`"

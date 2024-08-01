@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { TrashIcon } from '@radix-icons/vue'
-import { beautifyObjectName } from './utils'
-import type { FieldProps } from './interface'
-import AutoFormLabel from './AutoFormLabel.vue'
+import { Button } from '@/components/ui/button'
 import { FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { TrashIcon } from '@radix-icons/vue'
+import { ref } from 'vue'
+
+import type { FieldProps } from './interface'
+
+import AutoFormLabel from './AutoFormLabel.vue'
+import { beautifyObjectName } from './utils'
 
 defineProps<FieldProps>()
 
@@ -28,16 +30,16 @@ async function parseFileAsString(file: File | undefined): Promise<string> {
 </script>
 
 <template>
-  <FormField v-slot="slotProps" :name="fieldName">
+  <FormField :name="fieldName" v-slot="slotProps">
     <FormItem v-bind="$attrs">
-      <AutoFormLabel v-if="!config?.hideLabel" :required="required">
+      <AutoFormLabel :required="required" v-if="!config?.hideLabel">
         {{ config?.label || beautifyObjectName(label ?? fieldName) }}
       </AutoFormLabel>
       <FormControl>
         <slot v-bind="slotProps">
           <Input
-            v-if="!inputFile"
             type="file"
+            v-if="!inputFile"
             v-bind="{ ...config?.inputProps }"
             :disabled="disabled"
             @change="async (ev: InputEvent) => {
@@ -47,18 +49,18 @@ async function parseFileAsString(file: File | undefined): Promise<string> {
               slotProps.componentField.onInput(parsed)
             }"
           />
-          <div v-else class="flex h-9 w-full items-center justify-between rounded-md border border-input bg-transparent pl-3 pr-1 py-1 text-sm shadow-sm transition-colors">
+          <div class="h-9 w-full flex items-center justify-between border border-input rounded-md bg-transparent py-1 pl-3 pr-1 text-sm shadow-sm transition-colors" v-else>
             <p>{{ inputFile?.name }}</p>
             <Button
-              :size="'icon'"
-              :variant="'ghost'"
-              class="h-[26px] w-[26px]"
-              aria-label="Remove file"
-              type="button"
               @click="() => {
                 inputFile = undefined
                 slotProps.componentField.onInput(undefined)
               }"
+              aria-label="Remove file"
+              class="h-[26px] w-[26px]"
+              size="icon"
+              type="button"
+              variant="ghost"
             >
               <TrashIcon />
             </Button>

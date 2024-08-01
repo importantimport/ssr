@@ -1,33 +1,34 @@
 import type { Component, InputHTMLAttributes } from 'vue'
-import type { ZodAny, z } from 'zod'
+import type { z, ZodAny } from 'zod'
+
 import type { INPUT_COMPONENTS } from './constant'
 
 export interface FieldProps {
+  config?: ConfigItem
+  disabled?: boolean
   fieldName: string
   label?: string
   required?: boolean
-  config?: ConfigItem
-  disabled?: boolean
 }
 
 export interface Shape {
-  type: string
   default?: any
-  required?: boolean
   options?: string[]
+  required?: boolean
   schema?: ZodAny
+  type: string
 }
 
 export interface ConfigItem {
-  /** Value for the `FormLabel` */
-  label?: string
+  /** Pick which component to be rendered. */
+  component?: Component | keyof typeof INPUT_COMPONENTS
   /** Value for the `FormDescription` */
   description?: string
-  /** Pick which component to be rendered. */
-  component?: keyof typeof INPUT_COMPONENTS | Component
   /** Hide `FormLabel`. */
   hideLabel?: boolean
   inputProps?: InputHTMLAttributes
+  /** Value for the `FormLabel` */
+  label?: string
 }
 
 // Define a type to unwrap an array
@@ -52,30 +53,30 @@ export enum DependencyType {
 
 interface BaseDependency<SchemaType extends z.infer<z.ZodObject<any, any>>> {
   sourceField: keyof SchemaType
-  type: DependencyType
   targetField: keyof SchemaType
+  type: DependencyType
   when: (sourceFieldValue: any, targetFieldValue: any) => boolean
 }
 
 export type ValueDependency<SchemaType extends z.infer<z.ZodObject<any, any>>> =
-  BaseDependency<SchemaType> & {
+  {
     type:
       | DependencyType.DISABLES
-      | DependencyType.REQUIRES
       | DependencyType.HIDES
-  }
+      | DependencyType.REQUIRES
+  } & BaseDependency<SchemaType>
 
 export type EnumValues = readonly [string, ...string[]]
 
 export type OptionsDependency<
   SchemaType extends z.infer<z.ZodObject<any, any>>,
-> = BaseDependency<SchemaType> & {
-  type: DependencyType.SETS_OPTIONS
-
+> = {
   // Partial array of values from sourceField that will trigger the dependency
   options: EnumValues
-}
+
+  type: DependencyType.SETS_OPTIONS
+} & BaseDependency<SchemaType>
 
 export type Dependency<SchemaType extends z.infer<z.ZodObject<any, any>>> =
-  | ValueDependency<SchemaType>
   | OptionsDependency<SchemaType>
+  | ValueDependency<SchemaType>

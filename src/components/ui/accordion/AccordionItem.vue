@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
-import { AccordionItem, type AccordionItemProps, useForwardProps } from 'radix-vue'
 import { cn } from '@/lib/utils'
+import { AccordionItem, type AccordionItemProps, useForwardProps } from 'radix-vue'
+import { computed, type HTMLAttributes } from 'vue'
 
-const props = defineProps<AccordionItemProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<{ class?: HTMLAttributes['class'] } & AccordionItemProps>()
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props

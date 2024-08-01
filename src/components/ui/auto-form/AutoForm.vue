@@ -1,19 +1,22 @@
 <script setup lang="ts" generic="T extends ZodObjectOrWrapped">
-import { computed, toRefs } from 'vue'
-import type { ZodAny, z } from 'zod'
-import { toTypedSchema } from '@vee-validate/zod'
 import type { FormContext, GenericObject } from 'vee-validate'
-import { type ZodObjectOrWrapped, getBaseSchema, getBaseType, getDefaultValueInZodStack, getObjectFormSchema } from './utils'
+import type { z, ZodAny } from 'zod'
+
+import { Form } from '@/components/ui/form'
+import { toTypedSchema } from '@vee-validate/zod'
+import { computed, toRefs } from 'vue'
+
 import type { Config, ConfigItem, Dependency, Shape } from './interface'
+
 import AutoFormField from './AutoFormField.vue'
 import { provideDependencies } from './dependencies'
-import { Form } from '@/components/ui/form'
+import { getBaseSchema, getBaseType, getDefaultValueInZodStack, getObjectFormSchema, type ZodObjectOrWrapped } from './utils'
 
 const props = defineProps<{
-  schema: T
-  form?: FormContext<GenericObject>
-  fieldConfig?: Config<z.infer<T>>
   dependencies?: Dependency<z.infer<T>>[]
+  fieldConfig?: Config<z.infer<T>>
+  form?: FormContext<GenericObject>
+  schema: T
 }>()
 
 const emits = defineEmits<{
@@ -36,11 +39,11 @@ const shapes = computed(() => {
       options = Object.values(options)
 
     val[name as keyof T] = {
-      type: getBaseType(item),
       default: getDefaultValueInZodStack(item),
       options,
-      required: !['ZodOptional', 'ZodNullable'].includes(item._def.typeName),
+      required: !['ZodNullable', 'ZodOptional'].includes(item._def.typeName),
       schema: baseItem,
+      type: getBaseType(item),
     }
   })
   return val
@@ -48,13 +51,13 @@ const shapes = computed(() => {
 
 const fields = computed(() => {
   // @ts-expect-error ignore {} not assignable to object
-  const val: { [key in keyof z.infer<T>]: { shape: Shape, fieldName: string, config: ConfigItem } } = {}
+  const val: { [key in keyof z.infer<T>]: { config: ConfigItem, fieldName: string, shape: Shape } } = {}
   for (const key in shapes.value) {
     const shape = shapes.value[key]
     val[key as keyof z.infer<T>] = {
-      shape,
       config: props.fieldConfig?.[key] as ConfigItem,
       fieldName: key,
+      shape,
     }
   }
   return val
@@ -71,8 +74,8 @@ const formComponentProps = computed(() => {
     const formSchema = toTypedSchema(props.schema)
     return {
       keepValues: true,
-      validationSchema: formSchema,
       onSubmit: (val: GenericObject) => emits('submit', val),
+      validationSchema: formSchema,
     }
   }
 })
@@ -83,13 +86,13 @@ const formComponentProps = computed(() => {
     :is="formComponent"
     v-bind="formComponentProps"
   >
-    <slot name="customAutoForm" :fields="fields">
-      <template v-for="(shape, key) of shapes" :key="key">
+    <slot :fields="fields" name="customAutoForm">
+      <template :key="key" v-for="(shape, key) of shapes">
         <slot
-          :shape="shape"
-          :name="key.toString() as keyof z.infer<T>"
-          :field-name="key.toString()"
           :config="fieldConfig?.[key as keyof typeof fieldConfig] as ConfigItem"
+          :field-name="key.toString()"
+          :name="key.toString() as keyof z.infer<T>"
+          :shape="shape"
         >
           <AutoFormField
             :config="fieldConfig?.[key as keyof typeof fieldConfig] as ConfigItem"

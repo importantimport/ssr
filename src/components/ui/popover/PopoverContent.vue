@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type HTMLAttributes, computed } from 'vue'
+import { cn } from '@/lib/utils'
 import {
   PopoverContent,
   type PopoverContentEmits,
@@ -7,14 +7,14 @@ import {
   PopoverPortal,
   useForwardPropsEmits,
 } from 'radix-vue'
-import { cn } from '@/lib/utils'
+import { computed, type HTMLAttributes } from 'vue'
 
 defineOptions({
   inheritAttrs: false,
 })
 
 const props = withDefaults(
-  defineProps<PopoverContentProps & { class?: HTMLAttributes['class'] }>(),
+  defineProps<{ class?: HTMLAttributes['class'] } & PopoverContentProps>(),
   {
     align: 'center',
     sideOffset: 4,
