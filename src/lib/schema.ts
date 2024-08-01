@@ -10,7 +10,9 @@ const location = z.object({
     .describe('code as per ISO-3166-1 ALPHA-2, e.g. US, AU, IN'),
   region: z.string().optional().default('California')
     .describe('The general region where you live. Can be a US state, or a province, for instance.'),
-}).optional()
+})
+  .optional()
+  .describe('Location')
 
 const profiles = z.array(z.object({
   network: z.string().default('Twitter')
@@ -21,6 +23,7 @@ const profiles = z.array(z.object({
     .describe('e.g. http://twitter.example.com/neutralthoughts'),
 }))
   .optional()
+  .describe('Profiles')
 //   .describe('Specify any number of social networks that you participate in')
 
 const basics = z.object({
