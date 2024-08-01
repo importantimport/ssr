@@ -32,8 +32,8 @@ async function onSubmit(event: Event) {
               :disabled="isLoading"
               auto-capitalize="none"
               auto-complete="email"
-              id="url"
               auto-correct="off"
+              id="url"
               placeholder="https://registry.jsonresume.org/thomasdavis.json"
               type="url"
             />
