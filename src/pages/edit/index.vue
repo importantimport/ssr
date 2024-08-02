@@ -2,10 +2,12 @@
 import AccountSwitcher from '@/components/AccountSwitcher.vue'
 import Nav, { type LinkProp } from '@/components/Nav.vue'
 import { AutoForm } from '@/components/ui/auto-form'
+import { Button } from '@/components/ui/button'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
 import { Separator } from '@/components/ui/separator'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { schema } from '@/lib/schema'
+import { useStore } from '@/lib/store'
 import { cn } from '@/lib/utils'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
@@ -123,6 +125,8 @@ function onExpand() {
   isCollapsed.value = false
 }
 
+const store = useStore()
+
 const form = useForm({
   validationSchema: toTypedSchema(schema),
 })
@@ -163,7 +167,15 @@ const form = useForm({
       <ResizableHandle id="resize-handle-1" with-handle />
       <ResizablePanel :default-size="defaultLayout[1]" :min-size="30" id="resize-panel-2">
         <div class="px-2">
-          <AutoForm :form="form" :schema="schema" />
+          <AutoForm
+            :form="form"
+            :schema="schema"
+            @submit="(value) => store.resume = value"
+          >
+            <Button class="mb-2 w-full" type="submit">
+              Submit
+            </Button>
+          </AutoForm>
         </div>
       </ResizablePanel>
       <ResizableHandle id="resiz-handle-2" with-handle />
