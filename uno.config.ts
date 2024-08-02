@@ -21,7 +21,7 @@ export default defineConfig({
   presets: [
     presetUno(),
     presetAnimations(),
-    presetShadcn(),
+    presetShadcn() as any,
     // presetShadcn(builtinColors.map(c => ({ color: c }))),
   ],
 })
