@@ -1,6 +1,7 @@
 /* eslint-disable perfectionist/sort-objects */
 import * as z from 'zod'
 
+/** schema.basics.location */
 const location = z.object({
   address: z.string().optional().default('2712 Broadway St')
     .describe('To add multiple address lines, use \n. For example, 1234 Glücklichkeit Straße\nHinterhaus 5. Etage li.'),
@@ -14,6 +15,7 @@ const location = z.object({
   .optional()
   .describe('Location')
 
+/** schema.basics.profiles */
 const profiles = z.array(z.object({
   network: z.string().default('Twitter')
     .describe('e.g. Facebook or Twitter'),
@@ -21,9 +23,9 @@ const profiles = z.array(z.object({
     .describe('e.g. neutralthoughts'),
   url: z.string().url().default('https://twitter.com/john')
     .describe('e.g. http://twitter.example.com/neutralthoughts'),
-}).describe('Specify any number of social networks that you participate in'))
-//   .optional()
+}).describe('Profile'))
   .describe('Profiles')
+  // .describe('Specify any number of social networks that you participate in')
   .default([
     {
       network: 'Twitter',
@@ -32,6 +34,7 @@ const profiles = z.array(z.object({
     },
   ])
 
+/** schema.basics */
 const basics = z.object({
   name: z.string().default('John Doe'),
   label: z.string().default('Programmer')
