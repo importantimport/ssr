@@ -10,7 +10,6 @@ import { cn } from '@/lib/utils'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import { ref } from 'vue'
-import * as z from 'zod'
 
 interface MailProps {
   defaultCollapsed?: boolean
@@ -123,6 +122,10 @@ function onCollapse() {
 function onExpand() {
   isCollapsed.value = false
 }
+
+const form = useForm({
+  validationSchema: toTypedSchema(schema),
+})
 </script>
 
 <template>
