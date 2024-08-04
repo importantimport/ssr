@@ -9,7 +9,10 @@ import { FileIcon } from '@radix-icons/vue'
 import { ref } from 'vue'
 
 const isLoading = ref(false)
-async function onSubmit(event: Event) {
+
+const onSubmit = async (event: Event) => {
+  // eslint-disable-next-line no-console
+  console.log(event)
   event.preventDefault()
   isLoading.value = true
 
