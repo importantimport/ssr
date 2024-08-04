@@ -1,11 +1,10 @@
 <script setup lang="ts">
-// import LucideSpinner from '~icons/lucide/loader-2'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
-// import GitHubLogo from '~icons/radix-icons/github-logo'
-import { FileIcon } from '@radix-icons/vue'
+import { FileIcon, GithubLogoIcon } from '@radix-icons/vue'
+import { LucideLoader2 } from 'lucide-vue-next'
 import { ref } from 'vue'
 
 const isLoading = ref(false)
@@ -42,7 +41,7 @@ const onSubmit = async (event: Event) => {
             />
           </div>
           <Button :disabled="isLoading">
-            <!-- <LucideSpinner v-if="isLoading" class="mr-2 h-4 w-4 animate-spin" /> -->
+            <LucideLoader2 class="mr-2 h-4 w-4 animate-spin" v-if="isLoading" />
             Import from URL
           </Button>
         </div>
@@ -74,8 +73,8 @@ const onSubmit = async (event: Event) => {
       </div>
     </div>
     <Button :disabled="isLoading" type="button" variant="outline">
-      <!-- <LucideSpinner v-if="isLoading" class="mr-2 h-4 w-4 animate-spin" /> -->
-      <!-- <GitHubLogo v-else class="mr-2 h-4 w-4" /> -->
+      <LucideLoader2 class="mr-2 h-4 w-4 animate-spin" v-if="isLoading" />
+      <GithubLogoIcon class="mr-2 h-4 w-4" v-else />
       New Resume
     </Button>
   </div>
