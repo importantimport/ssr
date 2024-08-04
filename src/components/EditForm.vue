@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 // import LucideSpinner from '~icons/lucide/loader-2'
-// import GitHubLogo from '~icons/radix-icons/github-logo'
-
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
+// import GitHubLogo from '~icons/radix-icons/github-logo'
+import { FileIcon } from '@radix-icons/vue'
+import { ref } from 'vue'
 
 const isLoading = ref(false)
 async function onSubmit(event: Event) {
@@ -49,6 +49,14 @@ async function onSubmit(event: Event) {
           <Button :disabled="isLoading" variant="secondary">
             Import from Clipboard
           </Button>
+        </div>
+      </form>
+      <form @submit="onSubmit">
+        <div class="relative grid max-w-sm w-full items-center">
+          <Input accept="application/json" class="justify-center pl-10 pt-1.5 text-center" type="file" />
+          <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+            <FileIcon class="size-6 text-muted-foreground" />
+          </span>
         </div>
       </form>
     </div>
