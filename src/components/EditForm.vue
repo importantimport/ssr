@@ -3,9 +3,11 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
-import { FileIcon, GithubLogoIcon } from '@radix-icons/vue'
+import { GithubLogoIcon } from '@radix-icons/vue'
 import { LucideLoader2 } from 'lucide-vue-next'
 import { ref } from 'vue'
+
+import ImportFromFile from './home/ImportFromFile.vue'
 
 const isLoading = ref(false)
 
@@ -53,14 +55,7 @@ const onSubmit = async (event: Event) => {
           </Button>
         </div>
       </form>
-      <form @submit="onSubmit">
-        <div class="relative grid max-w-sm w-full items-center">
-          <Input accept="application/json" class="justify-center pl-10 pt-1.5 text-center" type="file" />
-          <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
-            <FileIcon class="size-6 text-muted-foreground" />
-          </span>
-        </div>
-      </form>
+      <ImportFromFile />
     </div>
     <div class="relative">
       <div class="absolute inset-0 flex items-center">
