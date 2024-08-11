@@ -1,3 +1,4 @@
+import { GuiiAIDevToolsVitePlugin } from '@guiiai/core'
 import unoCSS from '@unocss/vite'
 import vue from '@vitejs/plugin-vue'
 import { fileURLToPath } from 'node:url'
@@ -13,6 +14,7 @@ export default defineConfig({
     vueRouter(),
     vue(),
     vueDevTools(),
+    GuiiAIDevToolsVitePlugin(),
     unoCSS(unoConfig),
   ],
   resolve: {
