@@ -14,7 +14,9 @@ export default defineConfig({
     vueRouter(),
     vue(),
     vueDevTools(),
-    GuiiAIDevToolsVitePlugin(),
+    GuiiAIDevToolsVitePlugin({
+      appendTo: 'main.ts',
+    }),
     unoCSS(unoConfig),
   ],
   resolve: {
