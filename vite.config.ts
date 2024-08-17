@@ -1,7 +1,7 @@
 import { GuiiAIDevToolsVitePlugin } from '@guiiai/core'
 import unoCSS from '@unocss/vite'
 import vue from '@vitejs/plugin-vue'
-import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
 import vueRouter from 'unplugin-vue-router/vite'
 import { defineConfig } from 'vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
@@ -21,7 +21,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@': resolve(import.meta.dirname, 'src'),
     },
   },
 })
